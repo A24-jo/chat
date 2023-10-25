@@ -1,8 +1,14 @@
 "use client"
 
+import { useRouter } from "next/navigation";
+
 function Register() {
+
+  const navigate = useRouter()
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    navigate.push("/")
     // Agregar lógica para el registro aquí
   };
 
