@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 function Register() {
@@ -70,6 +71,11 @@ function Register() {
           >
             Register
           </button>
+          <div className=" flex items-center justify-between mt-6 ">
+            <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
+            <Link href={"/"} className="hover:underline text-gray-300 uppercase dark:text-gray-400 text-xs" > Do YOU HAVE AN ACCOUNT? </Link>
+            <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
+          </div>
         </form>
       </div>
     </div>

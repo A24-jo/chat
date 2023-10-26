@@ -1,52 +1,52 @@
+"use client"
+import { useState } from "react";
+import BarraLateral from "../../components/barraLateral";
+import BarraPerfil from "../../components/barraPerrfil";
 
-function Home (){
-    return (
-        <div class="h-screen flex">
-        {/* <!-- Barra lateral (lista de chats) --> */}
-        <div class="w-1/4 border-r border-gray-300">
-          {/* <!-- Encabezado de la barra lateral --> */}
-          <div class="bg-gray-200 p-4">
-            <h1 class="text-lg font-semibold">Chats</h1>
+
+function Home() {
+
+  const [barra, setBarra] = useState(false);
+
+  return (
+    <div className="h-screen flex dark:bg-gray-900 dark:text-white">
+
+      {barra ? <BarraPerfil setBarra={setBarra} /> : <BarraLateral setBarra={setBarra} />}
+
+      <div className="flex-1 flex flex-col">
+        {/* Encabezado del chat */}
+        <div className="bg-gray-200 p-4 border-b border-gray-300 dark:border-gray-600 dark:bg-gray-700">
+          <div className="flex items-center">
+          {/*avtar del amigo*/}
+            <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl font-semibold">
+              A
+            </div>
+
+            <h2 className="text-lg font-semibold dark:text-white ml-4">
+              Nombre del usuario
+            </h2>
           </div>
-          {/* <!-- Lista de chats --> */}
-          <ul class="overflow-y-auto">
-            {/* <!-- Cada elemento de la lista de chats --> */}
-            <li class="p-4 hover:bg-gray-100 cursor-pointer">
-              <div class="flex items-center">
-                <img src="imagen-usuario.jpg" alt="Imagen de usuario" class="w-10 h-10 rounded-full"/>
-                <div class="ml-4">
-                  <h2 class="text-md font-semibold">Nombre del usuario</h2>
-                  <p class="text-sm text-gray-600">Último mensaje</p>
-                </div>
-              </div>
-            </li>
-            {/* <!-- Puedes repetir este elemento para cada chat en la lista --> */}
-          </ul>
         </div>
-        
-        {/* <!-- Vista de chat --> */}
-        <div class="flex-1 flex flex-col">
-          {/* <!-- Encabezado del chat --> */}
-          <div class="bg-gray-200 p-4 border-b border-gray-300">
-            <div class="flex items-center">
-              <img src="imagen-usuario.jpg" alt="Imagen de usuario" class="w-10 h-10 rounded-full"/>
-              <h2 class="text-lg font-semibold ml-4">Nombre del usuario</h2>
-            </div>
-          </div>
-          {/* <!-- Lista de mensajes --> */}
-          <div class="flex-1 p-4 overflow-y-auto">
-            {/* <!-- Puedes agregar mensajes aquí --> */}
-          </div>
-          {/* <!-- Área de composición de mensaje --> */}
-          <div class="bg-gray-100 p-4 border-t border-gray-300">
-            <div class="flex items-center">
-              <input type="text" class="flex-1 py-2 px-4 rounded-full border border-gray-300 focus:outline-none" placeholder="Escribe un mensaje..."/>
-              <button class="ml-4 px-4 py-2 bg-green-500 text-white rounded-full hover:bg-green-600">Enviar</button>
-            </div>
+        {/* Lista de mensajes */}
+        <div className="flex-1 p-4 overflow-y-auto">
+          {/* Puedes agregar mensajes aquí */}
+        </div>
+        {/* Área de composición de mensaje */}
+        <div className= "  dark:bg-gray-800  bg-gray-100 p-4 border-t border-gray-300 dark:border-gray-600">
+          <div className="flex items-center">
+            <input
+              type="text"
+              className="flex-1 py-2 px-4 rounded-full border border-gray-300 focus:outline-none dark:text-black"
+              placeholder="Escribe un mensaje..."
+            />
+            <button className="ml-4 px-4 py-2 bg-[#0ed3cf] text-white rounded-full hover:bg-[#0ed3d0b0]">
+              Enviar
+            </button>
           </div>
         </div>
       </div>
-    )
+    </div>
+  );
 }
 
 export default Home;

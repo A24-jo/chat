@@ -9,8 +9,6 @@ export default function Home() {
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    
-    console.log("first")
    navigate.push("/home")
   };
 
@@ -39,8 +37,10 @@ export default function Home() {
     </div>
     <button type="submit" className="bg-[#0ed3cf] hover:bg-[#68cecc] text-white font-semibold rounded-md py-2 px-4 w-full">Login</button>
   </form>
-  <div className="mt-6 text-yellow-50 text-center">
-    <Link href={"/register"} className="hover:underline" >Sign up Here</Link>
+  <div className=" flex items-center justify-between mt-6 ">
+    <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
+    <Link href={"/register"} className="hover:underline text-gray-200 uppercase dark:text-gray-400 text-xs" >SING UP HERE</Link>
+    <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
   </div>
 </div>
 </div>
