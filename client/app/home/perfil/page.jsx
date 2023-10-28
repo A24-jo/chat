@@ -2,15 +2,16 @@
 import { BiLeftArrowAlt } from "react-icons/bi"
 import {BsBrightnessHigh} from "react-icons/bs"
 import {HiOutlineMoon} from "react-icons/hi"
-import ToggleCheckbox from "./checkbox";
+import ToggleCheckbox from "@/components/checkbox";
+import Link from "next/link";
 
-function BarraPerfil({setBarra}) {
+function BarraPerfil() {
   
   return (
     <div className="w-1/4  dark:bg-gray-800 dark:text-white ">
       <div className="bg-[#0ed3cf] pt-8 pl-5 pb-4 flex flex-wrap text-white space-x-28">
-        <div className="flex flex-wrap" onClick={()=>setBarra(false)}>
-          <BiLeftArrowAlt size="30px" />
+        <div className="flex flex-wrap" >
+          <Link href="/home"><BiLeftArrowAlt size="30px" /></Link>
           <p className="ml-3 font-semibold text-lg">Perfil</p>
         </div>
         <div className=" flex flex-wrap  items-center">
@@ -51,6 +52,10 @@ function BarraPerfil({setBarra}) {
         </div>
         <button className="bg-[#0ed3cf] text-white p-2 rounded hover:bg-[#0ed3d0b0]">
           Guardar Cambios
+        </button>
+        <br/>
+        <button className="bg-[#0ed3cf] text-white p-2 rounded hover:bg-[#0ed3d0b0]">
+          cerrar session
         </button>
       </div>
     </div>
