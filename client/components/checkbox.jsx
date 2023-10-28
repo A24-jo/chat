@@ -1,21 +1,36 @@
+"use client"
 import { useEffect, useState } from "react";
 
 const ToggleCheckbox = () => {
- const [theme,setTheme] = useState("light")
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(() => {
+    const storedTheme = localStorage.getItem("checkbox");
+    if(storedTheme === null) return false;
+    return storedTheme;
+  });;
+  const [theme, setTheme] = useState(() => {
+    const storedTheme = localStorage.getItem("theme");
+    return storedTheme || "light";
+  });
 
-  useEffect (()=>{
-    if(theme === "dark"){
-        document.querySelector("html").classList.add("dark");
-    }else{
-        document.querySelector("html").classList.remove("dark");
+  useEffect(() => {
+    if (theme === "dark") {
+      document.querySelector("html").classList.add("dark");
+    } else {
+      document.querySelector("html").classList.remove("dark");
     }
-  },[theme])
+  }, [theme]);
 
   const toggleCheckbox = () => {
+   
     setIsChecked(!isChecked);
-    setTheme(tema=> tema === "light"? "dark" : "light")
+    console.log(isChecked)
+    localStorage.setItem("checkbox",isChecked)
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
+
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   return (
     <div className="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
@@ -23,7 +38,7 @@ const ToggleCheckbox = () => {
         type="checkbox"
         name="toggle"
         id="toggle"
-        className="toggle-checkbox absolute block w-6 h-6 rounded-full  appearance-none cursor-pointer"
+        className="toggle-checkbox absolute block w-6 h-6 rounded-full appearance-none cursor-pointer"
         checked={isChecked}
         onChange={toggleCheckbox}
       />
@@ -33,7 +48,7 @@ const ToggleCheckbox = () => {
       >
         <div
           className={`toggle-circle absolute h-6 w-6 rounded-full bg-white transition-transform duration-300 ease-in-out ${
-            isChecked ? 'translate-x-4' : ''
+            isChecked ? "translate-x-10" : ""
           }`}
         ></div>
       </label>
@@ -42,3 +57,4 @@ const ToggleCheckbox = () => {
 };
 
 export default ToggleCheckbox;
+

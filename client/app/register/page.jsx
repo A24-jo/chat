@@ -32,8 +32,6 @@ function Register() {
             <label className="block text-gray-300">Name</label>
             <input
               type="text"
-              id="emailPhone"
-              name="emailPhone"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white"
             />
           </div>
@@ -41,8 +39,6 @@ function Register() {
             <label className="block text-gray-300">Email</label>
             <input
               type="text"
-              id="emailPhone"
-              name="emailPhone"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
           </div>
@@ -50,8 +46,6 @@ function Register() {
             <label className="block text-gray-200">Phone</label>
             <input
               type="text"
-              id="emailPhone"
-              name="emailPhone"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
           </div>
@@ -60,8 +54,6 @@ function Register() {
             <label className="block text-gray-200">Password</label>
             <input
               type="password"
-              id="password"
-              name="password"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
           </div>
