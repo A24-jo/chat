@@ -2,11 +2,41 @@
 import { BiLeftArrowAlt } from "react-icons/bi"
 import {BsBrightnessHigh} from "react-icons/bs"
 import {HiOutlineMoon} from "react-icons/hi"
-import ToggleCheckbox from "@/components/checkbox";
 import Link from "next/link";
+import React, { useState, useEffect } from 'react';
 
-function BarraPerfil() {
-  
+
+function BarraPerfil() { 
+  // Esta función cambia el tema
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const storedTheme = localStorage.getItem("theme");
+      return storedTheme || "light";
+    } else {
+      // Si no está en el navegador, devuelve un valor por defecto
+      return "light";
+    }
+  });
+
+  const changeModeTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+  }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (theme === "dark") {
+        document.querySelector("html").classList.add("dark");
+      } else {
+        document.querySelector("html").classList.remove("dark");
+      }
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem("theme", theme);
+    }
+  }, [theme]);
   return (
     <div className="w-1/4  dark:bg-gray-800 dark:text-white ">
       <div className="bg-[#0ed3cf] pt-8 pl-5 pb-4 flex flex-wrap text-white space-x-28">
@@ -15,9 +45,8 @@ function BarraPerfil() {
           <p className="ml-3 font-semibold text-lg">Perfil</p>
         </div>
         <div className=" flex flex-wrap  items-center">
-          <BsBrightnessHigh className="mr-2"/>
-           <ToggleCheckbox />
-           <HiOutlineMoon/>
+          <BsBrightnessHigh onClick={()=>changeModeTheme()} size="30px" className=" bg-gray-600 rounded-md mr-8 p-1 dark:bg-inherit "/>
+           <HiOutlineMoon onClick={()=>changeModeTheme()} size="30px" className="dark:bg-gray-600 rounded-md  " />
         </div>
       </div>
       <div className="flex flex-wrap justify-center mt-6">

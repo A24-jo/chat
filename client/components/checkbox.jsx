@@ -2,11 +2,7 @@
 import { useEffect, useState } from "react";
 
 const ToggleCheckbox = () => {
-  const [isChecked, setIsChecked] = useState(() => {
-    const storedTheme = localStorage.getItem("checkbox");
-    if(storedTheme === null) return false;
-    return storedTheme;
-  });;
+  const [isChecked, setIsChecked] = useState( false);
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem("theme");
     return storedTheme || "light";
@@ -21,10 +17,7 @@ const ToggleCheckbox = () => {
   }, [theme]);
 
   const toggleCheckbox = () => {
-   
     setIsChecked(!isChecked);
-    console.log(isChecked)
-    localStorage.setItem("checkbox",isChecked)
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 

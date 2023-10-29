@@ -1,10 +1,20 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsEmojiSunglasses } from "react-icons/bs";
 import ModalConfirmSubmit from "@/components/ModalConfirmSubmit";
 
 export default function HomeLayout({children}){
     const [show, setShow] = useState(false);
+    useEffect(() => {
+      const theme = localStorage.getItem("theme");
+      if (typeof window !== 'undefined') {
+        if (theme === "dark") {
+          document.querySelector("html").classList.add("dark");
+        } else {
+          document.querySelector("html").classList.remove("dark");
+        }
+      }
+    }, []);
   
     return (
       <div className="h-screen flex dark:bg-gray-900 dark:text-white">
