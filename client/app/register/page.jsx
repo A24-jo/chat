@@ -13,6 +13,9 @@ function Register() {
     // Agregar lógica para el registro aquí
   };
 
+  console.log("jlsdfjalkf")
+  console.log(process.env.NEXT_PUBLIC_BASE_API)
+
   return (
     <div className="bg-black flex justify-center items-center h-screen">
       {/* Left: Image */}
