@@ -2,10 +2,9 @@ import { useEffect } from "react";
 import Emojis from "./emojis"
 
 
-const ModalConfirmSubmit = ({ show, setShow }) => {
+const ModalConfirmSubmit = ({ show, setShow,setInput }) => {
     const closeOnOutsideClick = (e) => {
         if (show && e.target.classList.contains('modal-background')) {
-            console.log("first")
           setShow(false);
         }
       };
@@ -25,7 +24,7 @@ const ModalConfirmSubmit = ({ show, setShow }) => {
         <>
            {show && <div className="w-screen h-screen fixed bg-transparent flex mt-36 ml-80 modal-background ">  
             <div className="w-72 h-72">
-                <Emojis/>
+                <Emojis setInput={setInput}/>
             </div>
             </div>}
         </>
