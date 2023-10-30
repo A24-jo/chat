@@ -1,20 +1,32 @@
-"use client"
+"use client";
 
+import { registerUser } from "@/services/registerUser";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 function Register() {
+  const [registerForm, setRegisterForm] = useState({
+    email: "",
+    password: "",
+    name: "",
+    phone: "",
+  });
 
-  const navigate = useRouter()
+  const navigate = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate.push("/")
+
     // Agregar lógica para el registro aquí
+    await registerUser(registerForm.email,registerForm.name,registerForm.password,registerForm.phone);
+
+    navigate.push("/");
   };
 
-  console.log("jlsdfjalkf")
-  console.log(process.env.NEXT_PUBLIC_BASE_API)
+  const handleFormChange = ({target}) => {
+    setRegisterForm(prev => ({...prev, [target.name]: target.value}))
+  }
 
   return (
     <div className="bg-black flex justify-center items-center h-screen">
@@ -34,6 +46,9 @@ function Register() {
           <div className="mb-4">
             <label className="block text-gray-300">Name</label>
             <input
+              onChange={handleFormChange}
+              name="name"
+              value={registerForm.name}
               type="text"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white"
             />
@@ -41,6 +56,9 @@ function Register() {
           <div className="mb-4">
             <label className="block text-gray-300">Email</label>
             <input
+              onChange={handleFormChange}
+              name="email"
+              value={registerForm.email}
               type="text"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
@@ -48,6 +66,9 @@ function Register() {
           <div className="mb-4">
             <label className="block text-gray-200">Phone</label>
             <input
+              onChange={handleFormChange}
+              name="phone"
+              value={registerForm.phone}
               type="text"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
@@ -56,6 +77,9 @@ function Register() {
           <div className="mb-4">
             <label className="block text-gray-200">Password</label>
             <input
+              onChange={handleFormChange}
+              name="password"
+              value={registerForm.password}
               type="password"
               className="w-full border border-gray-600 rounded-md py-2 px-3 focus:outline-none focus:border-blue-400 bg-black text-white "
             />
@@ -68,7 +92,13 @@ function Register() {
           </button>
           <div className=" flex items-center justify-between mt-6 ">
             <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
-            <Link href={"/"} className="hover:underline text-gray-300 uppercase dark:text-gray-400 text-xs" > Do YOU HAVE AN ACCOUNT? </Link>
+            <Link
+              href={"/"}
+              className="hover:underline text-gray-300 uppercase dark:text-gray-400 text-xs"
+            >
+              {" "}
+              Do YOU HAVE AN ACCOUNT?{" "}
+            </Link>
             <span className="w-1/5 border-b dark:border-gray-600 md:w-1/4"></span>
           </div>
         </form>

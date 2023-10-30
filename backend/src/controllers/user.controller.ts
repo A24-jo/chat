@@ -10,6 +10,8 @@ export class UserController {
     ) {}
 
     registerUser = async (req: Request, res: Response) => {
+        console.log(req.body)
+
         const userCreated = await this.userService.register(req.body);
         if (userCreated == null)
             return res.status(400).json({ message: 'created error' });
