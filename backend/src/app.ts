@@ -10,13 +10,13 @@ const app = express();
 app.use(morgan('dev'));
 
 // configurar cors
-app.use(cors());
+app.use(cors({ origin: '*' }));
 
 // parsear el body de las requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /* Configurar las rutas */
-app.use(AppRouter.routes)
+app.use(AppRouter.routes);
 
 export default app;

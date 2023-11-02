@@ -1,5 +1,5 @@
 import { config as loadEnviromentVars } from 'dotenv';
-import app from './app';
+import app from './socket';
 import { AppDataSource } from './db';
 
 async function main() {
