@@ -4,6 +4,7 @@ import { BsEmojiSunglasses } from "react-icons/bs";
 import ModalConfirmSubmit from "@/components/ModalConfirmSubmit";
 import { useDispatch } from "react-redux";
 import { dataInputChat } from "@/redux/features/chatSlice";
+import { socket } from "../../socket";
 
 export default function HomeLayout({ children }) {
   const dispatch = useDispatch();
@@ -18,6 +19,16 @@ export default function HomeLayout({ children }) {
     dispatch(dataInputChat(input));
   }
 
+  const initialConnection = () => {
+    socket.connect()
+    socket.emit("join_room","hello my name is brayan")
+  }
+
+  const handleClick = () => {
+    console.log("click")
+    socket.emit("send",{emitido:"emitido"})
+  }
+
   useEffect(() => {
     const theme = localStorage.getItem("theme");
     if (typeof window !== 'undefined') {
@@ -27,6 +38,7 @@ export default function HomeLayout({ children }) {
         document.querySelector("html").classList.remove("dark");
       }
     };
+    initialConnection()
   }, []);
   
   return (
@@ -63,7 +75,7 @@ export default function HomeLayout({ children }) {
               value={input.text}
               onChange={(e) => textInput(e.target.value)}
             />
-            <button className="ml-4 px-4 py-2 bg-[#0ed3cf] text-white rounded-full hover:bg-[#0ed3d0b0]">
+            <button onClick={handleClick} className="ml-4 px-4 py-2 bg-[#0ed3cf] text-white rounded-full hover:bg-[#0ed3d0b0]">
               Enviar
             </button>
           </div>
