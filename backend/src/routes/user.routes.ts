@@ -13,13 +13,16 @@ export class UserRoutes {
         const userService = new UserService(
             BcryptAdapter.hash,
             BcryptAdapter.compare,
-            UuidAdapter.uuidGenerator
+            UuidAdapter.uuidGenerator,
+            JwtAdapter.generateToken
         );
 
         // controlador
-        const controller = new UserController(userService, JwtAdapter.generateToken);
+        const controller = new UserController(userService);
 
         router.post('/register', controller.registerUser);
+
+        router.post('/login', controller.loginUser);
 
         return router;
     }

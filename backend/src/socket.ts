@@ -7,13 +7,13 @@ const io = new SocketServer(server, {
     cors: { origin: 'http://localhost:3000', methods: ['GET', 'POST'] },
 });
 
-console.log("confiu --------------------------")
+    console.log("confiu --------------------------")
 
 io.on('connection', (socket) => {
     console.log("holaa",socket.id)
     socket.on('join_room', (data) => {
-        console.log('es la data');
-        console.log(data);
+        console.log('es la data l');
+        console.log(data,'esta ahi ');
     });
 
     socket.on("send", data => {
