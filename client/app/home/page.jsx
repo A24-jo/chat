@@ -1,9 +1,15 @@
 "use client"
 import { MdGroups2 } from "react-icons/md"
 import { BiDotsVertical } from "react-icons/bi"
+import { PiChatsFill } from "react-icons/pi"
 import Link from "next/link"
+import Chats from "@/components/Chats"
+import Contacts from "@/components/Contacts"
+import { useState } from "react"
 
 function BarraLateral() {
+
+  const [tabs, setTabs] = useState(1)
 
   return (
     <div className=" w-1/4 border-r border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-black">
@@ -18,9 +24,18 @@ function BarraLateral() {
               A
             </div>
             </Link>
-            <div className="flex justify-between mt-1">
-              <i className="fas fa-plus-circle text-2xl cursor-pointer hover:text-gray-400 dark:text-white"><MdGroups2 /></i>
-              <i className="fas fa-ellipsis-h text-2xl cursor-pointer hover:text-gray-400 dark:text-white ml-4"><BiDotsVertical /></i>
+            <div className="flex justify-between gap-4">
+              <i
+                onClick={() =>  setTabs(1)} 
+                className="fas fa-plus-circle text-2xl cursor-pointer hover:text-gray-400 dark:text-white">
+                <PiChatsFill />
+              </i>
+              <i
+                onClick={() =>  setTabs(2)} 
+                className="fas fa-plus-circle text-2xl cursor-pointer hover:text-gray-400 dark:text-white">
+                  <MdGroups2 />
+              </i>
+              <i className="fas fa-ellipsis-h text-2xl cursor-pointer hover:text-gray-400 dark:text-white"><BiDotsVertical /></i>
             </div>
           </div>
         </div>
@@ -33,26 +48,10 @@ function BarraLateral() {
           className="flex-auto py-1 px-4 rounded-2xl border border-gray-300 focus:outline-non"
         />
       </div>
-      <ul className="overflow-y-auto">
-        {/* Cada elemento de la lista de chats */}
-        <li className="p-4 hover:bg-gray-100 cursor-pointer dark:hover:bg-slate-600">
-          <div className="flex items-center">
-            {/*avtar del amigo*/}
-            <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white text-xl font-semibold">
-              A
-            </div>
-            <div className="ml-4">
-              <h2 className="text-md font-semibold dark:text-white">
-                Nombre del usuario
-              </h2>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                Último mensaje
-              </p>
-            </div>
-          </div>
-        </li>
-        {/* Puedes repetir este elemento para cada chat en la lista */}
-      </ul>
+      <div>
+        {tabs == 1 && <Chats  />}
+        {tabs == 2 && <Contacts />}
+      </div>
     </div>
   )
 }
