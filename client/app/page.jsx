@@ -1,10 +1,14 @@
 "use client";
+import { postUserData } from "@/redux/features/userSlice";
 import { loginUser } from "@/services/loginUser";
+import { setLocalStorageItems } from "@/utils/helpers";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function Home() {
+  const dispatch = useDispatch()
   const navigate = useRouter();
 
   const [loginStates, setLoginStates] = useState({
@@ -23,7 +27,8 @@ export default function Home() {
       //! mostrar en el fornt que el login fallo 
       return
     }
-    console.log(res)
+    dispatch(postUserData(res.user))
+    setLocalStorageItems("user_token",res.token)
     return navigate.push("/home");
   };
 

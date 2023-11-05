@@ -10,16 +10,18 @@ const io = new SocketServer(server, {
     console.log("confiu --------------------------")
 
 io.on('connection', (socket) => {
-    console.log("holaa",socket.id)
-    socket.on('join_room', (data) => {
-        console.log('es la data l');
-        console.log(data,'esta ahi ');
-    });
 
-    socket.on("send", data => {
-        console.log("send event")
-        console.log(data)
+    socket.on("join_room", ({userId}:{userId:string}) => {
+        console.log(userId)
+        socket.join(userId)
     })
+
+    socket.on('send_message', (message) => {
+        console.log("el mensaje que enviarion es => ", message)
+        io.to("20172692-aac6-4e4c-9d7b-83308129c34c").emit("new_message", message)
+        // io.emit('new_message',message)
+    })
+
 });
 
 export default server;

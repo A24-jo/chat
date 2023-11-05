@@ -15,7 +15,7 @@ export class UserController {
     loginUser = async (req: Request, res: Response) => {
         const userLogin = await this.userService.login(req.body);
         if (userLogin.error) {
-            return res.status(200).json({ error: userLogin.error });
+            return res.status(401).json({ error: userLogin.error });
         }
 
         return res.status(200).json(userLogin);

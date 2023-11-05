@@ -2,12 +2,12 @@
 import { useEffect, useState } from "react";
 import { BsEmojiSunglasses } from "react-icons/bs";
 import ModalConfirmSubmit from "@/components/ModalConfirmSubmit";
-import { useDispatch } from "react-redux";
-import { dataInputChat } from "@/redux/features/chatSlice";
 import { socket } from "../../socket";
+import { useSelector } from "react-redux";
 
 export default function HomeLayout({ children }) {
-  const dispatch = useDispatch();
+  const user =  useSelector( state =>  state.user.userData)
+
   const [show, setShow] = useState(false);
   const [input, setInput] = useState({
     numero: 1,
@@ -16,17 +16,19 @@ export default function HomeLayout({ children }) {
 
   const textInput = (e) => {
     setInput({ ...input, text: e })
-    dispatch(dataInputChat(input));
   }
 
   const initialConnection = () => {
     socket.connect()
-    socket.emit("join_room","hello my name is brayan")
+    socket.emit("join_room",{userId:user?.userId})
+    socket.on("new_message", (message) => {
+      console.log(message)
+    })
   }
 
   const handleClick = () => {
-    console.log("click")
-    socket.emit("send",{emitido:"emitido"})
+    console.log("clieck en send messge")
+    socket.emit("send_message",input.text)
   }
 
   useEffect(() => {
