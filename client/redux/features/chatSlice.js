@@ -1,12 +1,28 @@
 import { Axios } from "@/axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const getAllContacts = createAsyncThunk('appChats/getAllContacts', async () => {
-    const {data} = await Axios.get('user/get_all_users/f1dd2c94-434d-46d1-8ad3-162f52553f3f')
+export const getAllChats = createAsyncThunk(
+  "appChats/getAllChats",
+  async (_, { dispatch, getState }) => {
+    const userId = getState().user?.userData?.userId;
+
+    const { data } = await Axios.get(`user/get_all_users/${userId}`);
     return {
-        contacts: data
-    }
-})
+      chats: data,
+    };
+  }
+);
+
+export const getAllContacts = createAsyncThunk(
+  "appChats/getAllContacts",
+  async (_, { dispatch, getState }) => {
+    const id = getState().user?.userData?.id;
+    const { data } = await Axios.get(`contacts/get-all-contacts/${id}`);
+    return {
+      contacts: data,
+    };
+  }
+);
 
 const initialState = {
   chats: [],
@@ -19,14 +35,21 @@ const initialState = {
 export const chatSlice = createSlice({
   name: "chat",
   initialState,
-  reducers: {  },
-  extraReducers: builder => {
-    builder.addCase(getAllContacts.fulfilled, (state, action) => {
-        state.contacts = action.payload.contacts
-    })
-    
-  }
+  reducers: {
+    setSelectedUser: (state, action) => {
+      state.selectedUser = action.payload
+    }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllChats.fulfilled, (state, action) => {
+        state.chats = action.payload.chats;
+      })
+      .addCase(getAllContacts.fulfilled, (state, action) => {
+        state.contacts = action.payload.contacts;
+      });
+  },
 });
 
-// export const { } = chatSlice.actions;
+export const { setSelectedUser } = chatSlice.actions;
 export default chatSlice.reducer;

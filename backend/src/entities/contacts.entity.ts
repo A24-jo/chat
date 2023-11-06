@@ -1,21 +1,21 @@
 import {
-    Entity,
-    Column,
-    PrimaryGeneratedColumn,
-    CreateDateColumn,
-    UpdateDateColumn,
     BaseEntity,
-    OneToMany,
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from 'typeorm';
-import { ContactsEntity } from './contacts.entity';
+import { UserEntity } from './user.entity';
 
-@Entity('user')
-export class UserEntity extends BaseEntity {
+@Entity('contacts')
+export class ContactsEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column('varchar')
-    userId: string;
+    contactId: string;
 
     @Column('varchar', { length: 50 })
     name: string;
@@ -29,10 +29,7 @@ export class UserEntity extends BaseEntity {
     @Column('varchar', { length: 50 })
     email: string;
 
-    @Column('varchar')
-    password: string;
-
-    @Column('boolean', { default: true })
+    @Column('boolean', { default: false })
     active: boolean;
 
     @CreateDateColumn()
@@ -41,6 +38,9 @@ export class UserEntity extends BaseEntity {
     @UpdateDateColumn()
     updatedAt: Date;
 
-    @OneToMany(() => ContactsEntity, contact => contact.user)
-    contacts: ContactsEntity[]
+    @Column('varchar')
+    userId: number;
+
+    @ManyToOne(() => UserEntity, user => user.contacts)
+    user: UserEntity
 }

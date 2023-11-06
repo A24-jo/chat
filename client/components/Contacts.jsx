@@ -5,12 +5,15 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Contacts = () => {
-  const contacts = useSelector((state) => state.chat.contacts);
-  const dispatch = useDispatch();
+ 
+  const contacts = useSelector(state => state.chat.contacts)
+  const dispatch = useDispatch()
 
+  
   useEffect(() => {
-    dispatch(getAllContacts());
-  }, []);
+    dispatch(getAllContacts())
+  }, [])
+  
 
   return (
     <ul className="overflow-y-auto">

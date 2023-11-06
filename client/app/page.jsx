@@ -29,6 +29,7 @@ export default function Home() {
     }
     dispatch(postUserData(res.user))
     setLocalStorageItems("user_token",res.token)
+    setLocalStorageItems("user_data",JSON.stringify(res.user))
     return navigate.push("/home");
   };
 

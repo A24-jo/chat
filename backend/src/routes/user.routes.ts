@@ -18,7 +18,7 @@ export class UserRoutes {
             BcryptAdapter.compare,
             JwtAdapter.generateToken
         );
-
+            
         // controlador
         const controller = new UserController(userService);
 

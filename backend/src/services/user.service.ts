@@ -74,12 +74,22 @@ export class UserService {
                 where:{
                     userId: Not(userId)
                 },
-                select: ['userId','active','avatar','createAt','email','id','phone','updatedAt']
+                select: ['userId','active','avatar','createAt','email','id','phone','updatedAt','name']
             })
             return users
         } catch (error) {
             console.log(error)
             return []
+        }
+    }
+
+    static async getUserByUserId(userId: string): Promise<UserEntity>{
+        try {
+            const user = await UserEntity.findOneBy({userId})
+            return user
+        } catch (error) {
+            console.log(error)
+            return null
         }
     }
 }

@@ -12,14 +12,17 @@ export class MessageEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column('varchar')
-    message: Text;
+    @Column('text')
+    message: string;
 
     @Column('varchar', { length: 50 })
     sender: string;
 
     @Column('varchar')
     receiver: string;
+    
+    @Column('tinyint')
+    type: number;
 
     @CreateDateColumn()
     createAt: Date;

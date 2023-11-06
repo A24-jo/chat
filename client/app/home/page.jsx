@@ -49,8 +49,8 @@ function BarraLateral() {
         />
       </div>
       <div>
-        {tabs == 1 && <Chats  />}
-        {tabs == 2 && <Contacts />}
+        {tabs == 1 && <Contacts />}
+        {tabs == 2 && <Chats setTabs={setTabs} />}
       </div>
     </div>
   )

@@ -3,10 +3,16 @@ import { useEffect, useState } from "react";
 import { BsEmojiSunglasses } from "react-icons/bs";
 import ModalConfirmSubmit from "@/components/ModalConfirmSubmit";
 import { socket } from "../../socket";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getLocalStorageItems } from "@/utils/helpers";
+import { postUserData } from "@/redux/features/userSlice";
+import Image from "next/image";
+import { postNewMessage } from "@/services/postNewMessage";
 
 export default function HomeLayout({ children }) {
   const user =  useSelector( state =>  state.user.userData)
+  const selectedUser =  useSelector( state =>  state.chat.selectedUser)
+  const dispatch = useDispatch()
 
   const [show, setShow] = useState(false);
   const [input, setInput] = useState({
@@ -18,17 +24,26 @@ export default function HomeLayout({ children }) {
     setInput({ ...input, text: e })
   }
 
-  const initialConnection = () => {
+  const initialConnection = (userLocalStrId = false) => {
     socket.connect()
-    socket.emit("join_room",{userId:user?.userId})
+    socket.emit("join_room",{userId: user?.userId ?? userLocalStrId})
     socket.on("new_message", (message) => {
       console.log(message)
     })
   }
 
-  const handleClick = () => {
+  const handleClick = async () => {
+
+
+    await postNewMessage({
+      message: input.text,
+      receiver,
+      sender,
+      type: 1
+    })
+
     console.log("clieck en send messge")
-    socket.emit("send_message",input.text)
+    // socket.emit("send_message",input.text)
   }
 
   useEffect(() => {
@@ -40,13 +55,24 @@ export default function HomeLayout({ children }) {
         document.querySelector("html").classList.remove("dark");
       }
     };
-    initialConnection()
   }, []);
+
+  useEffect(() => {
+
+    if(!Object.entries(user).length){
+      const userDataLocalStr = getLocalStorageItems('user_data')
+      const userDataFormated = JSON.parse(userDataLocalStr)
+      dispatch(postUserData(userDataFormated))
+      initialConnection(userDataFormated.userId)
+    } else initialConnection();
+
+  }, [])
+  
   
   return (
     <div className="h-screen flex dark:bg-gray-900 dark:text-white">
       {children}
-      <div className="flex-1 flex flex-col">
+     {!!Object.entries(selectedUser).length ? (<div className="flex-1 flex flex-col">
         {/* Encabezado del chat */}
         <div className="bg-gray-200 p-4 border-b border-gray-300 dark:border-gray-600 dark:bg-gray-700">
           <div className="flex items-center">
@@ -56,7 +82,7 @@ export default function HomeLayout({ children }) {
             </div>
 
             <h2 className="text-lg font-semibold dark:text-white ml-4">
-              Nombre del usuario
+              {selectedUser?.name}
             </h2>
           </div>
         </div>
@@ -82,7 +108,14 @@ export default function HomeLayout({ children }) {
             </button>
           </div>
         </div>
-      </div>
+      </div>) : (
+        <div className="flex-1 flex items-center justify-center">
+          <div className="flex flex-col gap-6 items-center justify-center">
+          <h1 className="text-lg">Selecciona un usuario para chatear</h1>
+          <Image src="/cta-img.svg" height={300} width={500} alt="no-user-selected" />
+          </div>
+        </div>
+      )}
       <ModalConfirmSubmit show={show} setShow={setShow} setInput={setInput} />
     </div>
   );
